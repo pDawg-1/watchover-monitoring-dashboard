@@ -1,0 +1,165 @@
+.dashboard {
+  min-height: 100vh;
+  background: #050505;
+  color: white;
+  padding: 40px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  color: #8b5cf6;
+  font-size: 4rem;
+  letter-spacing: 8px;
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.header p {
+  color: #22d3ee;
+  letter-spacing: 3px;
+  font-size: 1rem;
+}
+
+.health-card {
+  width: 450px;
+  margin: auto;
+  padding: 35px;
+  text-align: center;
+  border: 2px solid #374151;
+  border-radius: 24px;
+  background: #0d0d0d;
+}
+
+.health-card h3 {
+  color: #d1d5db;
+  letter-spacing: 3px;
+}
+
+.health-score {
+  font-size: 6rem;
+  font-weight: 700;
+}
+
+.health-text {
+  color: #9ca3af;
+  font-size: 1.2rem;
+}
+
+.health-badge {
+  margin-top: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.updated {
+  color: #22d3ee;
+  margin-top: 20px;
+}
+
+.metrics {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.metric-card {
+  width: 260px;
+  padding: 30px;
+  text-align: center;
+  border-radius: 20px;
+  background: #0d0d0d;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-8px);
+}
+
+.metric-card h3 {
+  color: #d1d5db;
+  letter-spacing: 3px;
+}
+
+.metric-value {
+  font-size: 3rem;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.icon {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: white;
+}
+
+/* CPU */
+
+.cpu-card {
+  border: 2px solid #00ff88;
+  animation: pulseGreen 2.5s infinite;
+}
+
+/* MEMORY */
+
+.memory-card {
+  border: 2px solid #00e5ff;
+  animation: pulseBlue 2.5s infinite;
+}
+
+/* STORAGE */
+
+.disk-card {
+  border: 2px solid #c084fc;
+  animation: pulsePurple 2.5s infinite;
+}
+
+/* Animations */
+
+@keyframes pulseGreen {
+  0% {
+    box-shadow: 0 0 5px #00ff88;
+  }
+  50% {
+    box-shadow:
+      0 0 20px #00ff88,
+      0 0 35px #00ff88;
+  }
+  100% {
+    box-shadow: 0 0 5px #00ff88;
+  }
+}
+
+@keyframes pulseBlue {
+  0% {
+    box-shadow: 0 0 5px #00e5ff;
+  }
+  50% {
+    box-shadow:
+      0 0 20px #00e5ff,
+      0 0 35px #00e5ff;
+  }
+  100% {
+    box-shadow: 0 0 5px #00e5ff;
+  }
+}
+
+@keyframes pulsePurple {
+  0% {
+    box-shadow: 0 0 5px #c084fc;
+  }
+  50% {
+    box-shadow:
+      0 0 20px #c084fc,
+      0 0 35px #c084fc;
+  }
+  100% {
+    box-shadow: 0 0 5px #c084fc;
+  }
+}

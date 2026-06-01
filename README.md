@@ -1,23 +1,26 @@
 # WatchOver
 
-A real-time infrastructure monitoring dashboard built with React and Flask.
+WatchOver is a system monitoring dashboard that provides a live view of key system metrics such as CPU, memory, and storage usage. The goal of this project was to gain hands-on experience building a full-stack application that connects a React frontend with a Flask backend while working with real-time system data.
 
-## Features
+## What It Does
 
-- Real-time CPU Monitoring
-- Real-time Memory Monitoring
-- Real-time Storage Monitoring
-- Dynamic System Health Score
-- Health Status Indicator
-- Last Updated Timestamp
-- Neon Cyberpunk Dashboard UI
-- REST API Integration
+- Displays live CPU usage
+- Displays live memory usage
+- Displays live storage usage
+- Calculates an overall system health score
+- Updates metrics automatically every few seconds
+- Shows the last refresh time
+- Uses a custom neon-themed dashboard interface
 
-## Tech Stack
+## Why I Built It
+
+I wanted to build a project that goes beyond simple CRUD applications and works with real system information. This project helped me understand how frontend and backend applications communicate through APIs while also giving me experience working with system monitoring libraries and real-time updates.
+
+## Technologies Used
 
 ### Frontend
 - React
-- CSS3
+- CSS
 - React Icons
 
 ### Backend
@@ -38,13 +41,14 @@ watchover-monitoring-dashboard
 │   ├── src
 │   │   ├── App.js
 │   │   ├── App.css
-│   │   └── ...
+│   │   └── other React files
+│   │
 │   └── package.json
 │
 └── .gitignore
 ```
 
-## Run Locally
+## Running the Project
 
 ### Backend
 
@@ -62,9 +66,43 @@ npm install
 npm start
 ```
 
+The frontend runs on:
+
+```text
+http://localhost:3000
+```
+
+and connects to the Flask API running on:
+
+```text
+http://127.0.0.1:5000
+```
+
+## What I Learned
+
+While building WatchOver, I gained experience with:
+
+- Creating REST APIs using Flask
+- Consuming APIs in React
+- Managing component state with React Hooks
+- Working with real-time data updates
+- Using Git and GitHub for version control
+- Debugging frontend and backend integration issues
+
+## Future Improvements
+
+Some features I would like to add in future versions include:
+
+- Network monitoring
+- Process monitoring
+- Historical charts and trends
+- User authentication
+- Docker deployment
+- Alert notifications for critical system conditions
+
 ## Author
 
-Prathithi Korwar
+**Prathithi Korwar**
 
 Master of Engineering in Computer Science  
 University of Cincinnati

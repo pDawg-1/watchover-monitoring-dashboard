@@ -1,108 +1,131 @@
 # WatchOver
 
-WatchOver is a system monitoring dashboard that provides a live view of key system metrics such as CPU, memory, and storage usage. The goal of this project was to gain hands-on experience building a full-stack application that connects a React frontend with a Flask backend while working with real-time system data.
+WatchOver is a lightweight full-stack system-monitoring dashboard. It collects CPU, memory, and disk usage from the machine running the backend and displays the metrics in a React dashboard that refreshes every five seconds.
 
-## What It Does
+## Features
 
-- Displays live CPU usage
-- Displays live memory usage
-- Displays live storage usage
-- Calculates an overall system health score
-- Updates metrics automatically every few seconds
-- Shows the last refresh time
-- Uses a custom neon-themed dashboard interface
+- Live CPU, memory, and disk usage
+- Automatic five-second metric refresh
+- Color-coded resource indicators
+- Calculated system health score
+- Responsive metric-card layout
+- Flask REST API backed by `psutil`
 
-## Why I Built It
+## Architecture
 
-I wanted to build a project that goes beyond simple CRUD applications and works with real system information. This project helped me understand how frontend and backend applications communicate through APIs while also giving me experience working with system monitoring libraries and real-time updates.
+```text
+Operating system
+      |
+      | psutil reads system metrics
+      v
+Flask backend (port 5000)
+      |
+      | JSON over HTTP
+      v
+React frontend (port 3000)
+      |
+      v
+WatchOver dashboard
+```
 
-## Technologies Used
+The frontend polls three Flask endpoints. The backend reads the host machine's current statistics and returns them as JSON. There is currently no database, so WatchOver displays live values without storing metric history.
+
+## Technology Stack
 
 ### Frontend
+
 - React
+- JavaScript and JSX
 - CSS
 - React Icons
+- React Testing Library
 
 ### Backend
+
+- Python
 - Flask
 - Flask-CORS
 - psutil
 
-## Project Structure
+## API Endpoints
 
-```text
-watchover-monitoring-dashboard
-│
-├── backend
-│   └── app.py
-│
-├── frontend
-│   ├── public
-│   ├── src
-│   │   ├── App.js
-│   │   ├── App.css
-│   │   └── other React files
-│   │
-│   └── package.json
-│
-└── .gitignore
-```
+| Method | Endpoint | Purpose | Example response |
+| --- | --- | --- | --- |
+| GET | `/` | Backend status | `{"message": "WatchOver Backend Running"}` |
+| GET | `/cpu` | CPU utilization | `{"cpu": 24.5}` |
+| GET | `/memory` | Memory utilization | `{"memory": 61.2}` |
+| GET | `/disk` | Disk utilization | `{"disk": 72.8}` |
 
-## Running the Project
+## Run Locally
 
-### Backend
+### 1. Start the backend
 
-```bash
+```powershell
 cd backend
+python -m venv venv
+venv\Scripts\Activate.ps1
 pip install flask flask-cors psutil
 python app.py
 ```
 
-### Frontend
+The backend runs at `http://127.0.0.1:5000`.
 
-```bash
+### 2. Start the frontend
+
+Open another terminal:
+
+```powershell
 cd frontend
 npm install
 npm start
 ```
 
-The frontend runs on:
+The frontend runs at `http://localhost:3000`.
+
+If PowerShell blocks the npm script wrapper, use `npm.cmd` instead of `npm`.
+
+## Health Score
+
+The dashboard calculates a simple weighted score:
 
 ```text
-http://localhost:3000
+health score = 100 - CPU/2 - memory/2 - disk/4
 ```
 
-and connects to the Flask API running on:
+The result is rounded and prevented from dropping below zero.
 
-```text
-http://127.0.0.1:5000
+| Score | Status |
+| --- | --- |
+| 80-100 | Healthy |
+| 60-79 | Warning |
+| 0-59 | Critical |
+
+This is a project-specific heuristic rather than an industry-standard health formula.
+
+## Tests
+
+Run the frontend test suite with:
+
+```powershell
+cd frontend
+npm test -- --watchAll=false
 ```
 
-## What I Learned
+## Current Limitations
 
-While building WatchOver, I gained experience with:
+- Monitors only the machine running the Flask backend
+- Does not store historical metrics
+- Uses polling rather than live streaming
+- Does not yet show frontend loading or error states
+- Uses hard-coded local API addresses
+- Uses Flask's development server
 
-- Creating REST APIs using Flask
-- Consuming APIs in React
-- Managing component state with React Hooks
-- Working with real-time data updates
-- Using Git and GitHub for version control
-- Debugging frontend and backend integration issues
+## Possible Improvements
 
-## Future Improvements
-
-Some features I would like to add in future versions include:
-
-- Network monitoring
-- Process monitoring
-- Historical charts and trends
-- User authentication
-- Docker deployment
-- Alert notifications for critical system conditions
-
-## Author
-
-**Prathithi Korwar**
-
-Master of Engineering in Computer Science  
-University of Cincinnati
+- Add an aggregated `/metrics` endpoint
+- Store timestamped metrics for historical charts
+- Add configurable alerts and thresholds
+- Monitor multiple machines
+- Add authentication and restricted CORS settings
+- Move API configuration into environment variables
+- Deploy behind a production WSGI server

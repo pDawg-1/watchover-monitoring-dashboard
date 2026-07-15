@@ -61,6 +61,11 @@
   margin-top: 20px;
 }
 
+.error {
+  color: #ef4444;
+  margin: 15px 0 0;
+}
+
 .metrics {
   margin-top: 50px;
   display: flex;

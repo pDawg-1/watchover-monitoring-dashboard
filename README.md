@@ -64,7 +64,7 @@ The frontend polls three Flask endpoints. The backend reads the host machine's c
 cd backend
 python -m venv venv
 venv\Scripts\Activate.ps1
-pip install flask flask-cors psutil
+pip install -r requirements.txt
 python app.py
 ```
 
@@ -116,7 +116,7 @@ npm test -- --watchAll=false
 - Monitors only the machine running the Flask backend
 - Does not store historical metrics
 - Uses polling rather than live streaming
-- Does not yet show frontend loading or error states
+- Does not yet show a loading indicator while requests are in progress
 - Uses hard-coded local API addresses
 - Uses Flask's development server
 

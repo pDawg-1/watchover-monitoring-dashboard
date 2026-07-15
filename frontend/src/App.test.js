@@ -4,8 +4,19 @@ import App from './App';
 beforeEach(() => {
   global.fetch = jest.fn(() =>
     Promise.resolve({
+      ok: true,
       json: () => Promise.resolve({ cpu: 25, memory: 40, disk: 55 }),
     })
+  );
+});
+
+test('shows an error when the backend is unavailable', async () => {
+  global.fetch.mockRejectedValue(new Error('Backend unavailable'));
+
+  render(<App />);
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(
+    'Unable to reach the monitoring backend.'
   );
 });
 

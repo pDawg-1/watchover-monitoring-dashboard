@@ -7,29 +7,51 @@ function App() {
   const [memory, setMemory] = useState(0);
   const [disk, setDisk] = useState(0);
   const [lastUpdated, setLastUpdated] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchMetrics = () => {
-      fetch("http://127.0.0.1:5000/cpu")
-        .then((res) => res.json())
-        .then((data) => setCpu(data.cpu));
+    let isActive = true;
 
-      fetch("http://127.0.0.1:5000/memory")
-        .then((res) => res.json())
-        .then((data) => setMemory(data.memory));
+    const fetchMetric = async (url) => {
+      const response = await fetch(url);
 
-      fetch("http://127.0.0.1:5000/disk")
-        .then((res) => res.json())
-        .then((data) => setDisk(data.disk));
+      if (!response.ok) {
+        throw new Error("Metric request failed");
+      }
 
-      setLastUpdated(new Date().toLocaleTimeString());
+      return response.json();
+    };
+
+    const fetchMetrics = async () => {
+      try {
+        const [cpuData, memoryData, diskData] = await Promise.all([
+          fetchMetric("http://127.0.0.1:5000/cpu"),
+          fetchMetric("http://127.0.0.1:5000/memory"),
+          fetchMetric("http://127.0.0.1:5000/disk"),
+        ]);
+
+        if (!isActive) return;
+
+        setCpu(cpuData.cpu);
+        setMemory(memoryData.memory);
+        setDisk(diskData.disk);
+        setLastUpdated(new Date().toLocaleTimeString());
+        setError("");
+      } catch {
+        if (isActive) {
+          setError("Unable to reach the monitoring backend.");
+        }
+      }
     };
 
     fetchMetrics();
 
     const interval = setInterval(fetchMetrics, 5000);
 
-    return () => clearInterval(interval);
+    return () => {
+      isActive = false;
+      clearInterval(interval);
+    };
   }, []);
 
   const healthScore = Math.max(
@@ -88,6 +110,12 @@ function App() {
         <p className="updated">
           LAST UPDATED: {lastUpdated}
         </p>
+
+        {error && (
+          <p className="error" role="alert">
+            {error}
+          </p>
+        )}
       </div>
 
       <div className="metrics">

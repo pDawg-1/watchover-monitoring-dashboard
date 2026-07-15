@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "WatchOver",
+  "name": "WatchOver System Monitoring Dashboard",
   "icons": [
     {
       "src": "favicon.ico",

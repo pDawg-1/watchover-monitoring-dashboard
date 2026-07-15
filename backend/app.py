@@ -10,7 +10,7 @@ CORS(app)
 @app.route("/")
 def home():
     return {
-        "message": "InsightBoard Backend Running"
+        "message": "Watchover Backend Running"
     }
 
 

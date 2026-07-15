@@ -10,7 +10,7 @@ CORS(app)
 @app.route("/")
 def home():
     return {
-        "message": "Watchover Backend Running"
+        "message": "WatchOver Backend Running"
     }
 
 

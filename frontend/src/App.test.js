@@ -1,8 +1,30 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+beforeEach(() => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      json: () => Promise.resolve({ cpu: 25, memory: 40, disk: 55 }),
+    })
+  );
+});
+
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
+test('renders the WatchOver dashboard', async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+  expect(screen.getByRole('heading', { name: /watchover/i })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /system status/i })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /^cpu$/i })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /memory/i })).toBeInTheDocument();
+  expect(screen.getByRole('heading', { name: /storage/i })).toBeInTheDocument();
+
+  await waitFor(() => {
+    expect(screen.getByText('25%')).toBeInTheDocument();
+    expect(screen.getByText('40%')).toBeInTheDocument();
+    expect(screen.getByText('55%')).toBeInTheDocument();
+  });
 });
